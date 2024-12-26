@@ -16,7 +16,7 @@ type CartItem struct {
 
 type Product struct {
 	gorm.Model
-	Name  string
+	Name  string `json:"name" binding:"required"`
 	Price float32
 	Count int32
 }

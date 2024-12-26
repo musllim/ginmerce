@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 
+	"github.com/gin-gonic/gin"
 	"github.com/lpernett/godotenv"
+	"github.com/musllim/ginmerce/controllers"
 	"github.com/musllim/ginmerce/inits"
 )
 
@@ -16,5 +18,9 @@ func init() {
 	inits.Migrate()
 }
 func main() {
-
+	r := gin.Default()
+	r.GET("/products", controllers.GetProducts)
+	r.POST("/products", controllers.CreateProduct)
+	r.GET("/products/:id", controllers.GetProduct)
+	r.Run()
 }
