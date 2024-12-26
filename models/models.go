@@ -23,8 +23,8 @@ type Product struct {
 
 type User struct {
 	gorm.Model
-	Email      string
-	Names      string
-	Password   string
+	Email      string `json:"email" binding:"required"`
+	Names      string `json:"names" binding:"required"`
+	Password   string `json:"password" binding:"required"`
 	Isverified bool
 }

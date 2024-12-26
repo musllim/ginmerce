@@ -22,5 +22,8 @@ func main() {
 	r.GET("/products", controllers.GetProducts)
 	r.POST("/products", controllers.CreateProduct)
 	r.GET("/products/:id", controllers.GetProduct)
+
+	r.POST("/register", controllers.CreateUser)
+	r.POST("/login", controllers.Login)
 	r.Run()
 }
