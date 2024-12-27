@@ -26,6 +26,9 @@ func main() {
 	r.DELETE("/products/:id", middlewares.RequireAuth, controllers.DeleteProduct)
 
 	r.POST("/cart", middlewares.RequireAuth, controllers.CreateCart)
+	r.GET("/cart", middlewares.RequireAuth, controllers.GetCart)
+	r.POST("/cart/items", middlewares.RequireAuth, controllers.CreateCartItem)
+	r.GET("/cart/:id/items", middlewares.RequireAuth, controllers.GetCartItems)
 
 	r.POST("/register", controllers.CreateUser)
 	r.POST("/login", controllers.Login)

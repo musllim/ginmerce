@@ -8,18 +8,18 @@ type User struct {
 	Names      string `json:"names" binding:"required"`
 	Password   string `json:"password" binding:"required"`
 	Isverified bool
-	Cart       Cart
+	Cart       Cart `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"` // One-To-One relationship (has one)
 }
 type Cart struct {
 	gorm.Model
-	UserID   uint `binding:"required" gorm:"uniqueIndex"`
+	UserID   uint `binding:"required"`
 	CartItem []CartItem
 }
 type CartItem struct {
 	gorm.Model
-	CartID    uint
-	Quantity  int32
-	ProductID uint
+	CartID    uint  `binding:"required"`
+	Quantity  int32 `binding:"required"`
+	ProductID uint  `binding:"required"`
 }
 
 type Product struct {
