@@ -60,6 +60,16 @@ func DeleteProduct(c *gin.Context) {
 		"message": "Product deleted",
 	})
 }
+
+// CreateProduct godoc
+// @Summary Create a product
+// @Description Create a product
+// @Tags products
+// @Accept  json
+// @Produce  json
+// @Param product body Product true "Product"
+// @Success 200 {object} Product
+// @Router /products [post]
 func CreateProduct(c *gin.Context) {
 	var product models.Product
 	c.BindJSON(&product)
