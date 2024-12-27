@@ -13,6 +13,21 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+type User struct {
+	Email    string `json:"email" binding:"required" gorm:"uniqueIndex"`
+	Names    string `json:"names" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+// CreateUser godoc
+// @Summary Create a user
+// @Description Create a user
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param user body User true "User"
+// @Success 200 {object} User
+// @Router /register [post]
 func CreateUser(c *gin.Context) {
 	var user models.User
 	c.BindJSON(&user)
@@ -27,6 +42,16 @@ func CreateUser(c *gin.Context) {
 		"data": user,
 	})
 }
+
+// Login godoc
+// @Summary Login
+// @Description Login
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param user body User true "User"
+// @Success 200 {string} string	"token"
+// @Router /login [post]
 func Login(c *gin.Context) {
 	type User struct {
 		Email    string `json:"email" binding:"required" email:"true"`
@@ -64,6 +89,15 @@ func Login(c *gin.Context) {
 	})
 }
 
+// Profile godoc
+// @Summary Profile
+// @Description Profile
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Security ApiKeyAuth
+// @Success 200 {object} User
+// @Router /profile [get]
 func Profile(c *gin.Context) {
 	user, _ := c.Get("user")
 	c.JSON(200, gin.H{
@@ -71,6 +105,15 @@ func Profile(c *gin.Context) {
 	})
 }
 
+// Logout godoc
+// @Summary Logout
+// @Description Logout
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Security ApiKeyAuth
+// @Success 200 {string} string	"Logged out"
+// @Router /logout [get]
 func Logout(c *gin.Context) {
 	c.Set("user", nil)
 	c.SetCookie("Authorization", "", -1, "", "", false, true)
