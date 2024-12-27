@@ -29,7 +29,7 @@ func CreateUser(c *gin.Context) {
 }
 func Login(c *gin.Context) {
 	type User struct {
-		Email    string `json:"email" binding:"required"`
+		Email    string `json:"email" binding:"required" email:"true"`
 		Password string `json:"password" binding:"required"`
 	}
 	var user User
@@ -61,5 +61,12 @@ func Login(c *gin.Context) {
 	c.SetCookie("Authorization", token, 3600, "", "", false, true)
 	c.JSON(http.StatusOK, gin.H{
 		"token": token,
+	})
+}
+
+func Profile(c *gin.Context) {
+	user, _ := c.Get("user")
+	c.JSON(200, gin.H{
+		"data": user,
 	})
 }

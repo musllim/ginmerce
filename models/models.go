@@ -2,29 +2,29 @@ package models
 
 import "gorm.io/gorm"
 
+type User struct {
+	gorm.Model
+	Email      string `json:"email" binding:"required" gorm:"uniqueIndex"`
+	Names      string `json:"names" binding:"required"`
+	Password   string `json:"password" binding:"required"`
+	Isverified bool
+	Cart       Cart
+}
 type Cart struct {
 	gorm.Model
-	Userid int32
+	UserID   uint
+	CartItem []CartItem
 }
-
 type CartItem struct {
 	gorm.Model
-	Cartid    int32
-	Productid int32
+	CartID    uint
 	Quantity  int32
+	ProductID uint
 }
 
 type Product struct {
 	gorm.Model
-	Name  string `json:"name" binding:"required"`
+	Name  string `json:"name" binding:"required" gorm:"uniqueIndex"`
 	Price float32
 	Count int32
-}
-
-type User struct {
-	gorm.Model
-	Email      string `json:"email" binding:"required"`
-	Names      string `json:"names" binding:"required"`
-	Password   string `json:"password" binding:"required"`
-	Isverified bool
 }

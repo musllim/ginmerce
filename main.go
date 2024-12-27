@@ -7,6 +7,7 @@ import (
 	"github.com/lpernett/godotenv"
 	"github.com/musllim/ginmerce/controllers"
 	"github.com/musllim/ginmerce/inits"
+	"github.com/musllim/ginmerce/middlewares"
 )
 
 func init() {
@@ -20,10 +21,11 @@ func init() {
 func main() {
 	r := gin.Default()
 	r.GET("/products", controllers.GetProducts)
-	r.POST("/products", controllers.CreateProduct)
+	r.POST("/products", middlewares.RequireAuth, controllers.CreateProduct)
 	r.GET("/products/:id", controllers.GetProduct)
 
 	r.POST("/register", controllers.CreateUser)
 	r.POST("/login", controllers.Login)
+	r.GET("/profile", middlewares.RequireAuth, controllers.Profile)
 	r.Run()
 }
