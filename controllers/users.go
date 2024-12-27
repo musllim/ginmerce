@@ -70,3 +70,11 @@ func Profile(c *gin.Context) {
 		"data": user,
 	})
 }
+
+func Logout(c *gin.Context) {
+	c.Set("user", nil)
+	c.SetCookie("Authorization", "", -1, "", "", false, true)
+	c.JSON(200, gin.H{
+		"message": "Logged out",
+	})
+}

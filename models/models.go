@@ -12,7 +12,7 @@ type User struct {
 }
 type Cart struct {
 	gorm.Model
-	UserID   uint
+	UserID   uint `binding:"required" gorm:"uniqueIndex"`
 	CartItem []CartItem
 }
 type CartItem struct {

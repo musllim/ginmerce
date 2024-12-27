@@ -22,6 +22,12 @@ func GetProduct(c *gin.Context) {
 	})
 }
 
+func DeleteProduct(c *gin.Context) {
+	inits.Db.Delete(&models.Product{}, c.Param("id"))
+	c.JSON(200, gin.H{
+		"message": "Product deleted",
+	})
+}
 func CreateProduct(c *gin.Context) {
 	var product models.Product
 	c.BindJSON(&product)
