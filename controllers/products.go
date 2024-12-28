@@ -40,6 +40,13 @@ func GetProducts(c *gin.Context) {
 func GetProduct(c *gin.Context) {
 	var product models.Product
 	inits.Db.First(&product, c.Param("id"))
+
+	if product.ID == 0 {
+		c.JSON(404, gin.H{
+			"message": "Product not found",
+		})
+		return
+	}
 	c.JSON(200, gin.H{
 		"data": product,
 	})
@@ -55,6 +62,16 @@ func GetProduct(c *gin.Context) {
 // @Success 200 {string} string	"Product deleted"
 // @Router /products/{id} [delete]
 func DeleteProduct(c *gin.Context) {
+	var product models.Product
+	inits.Db.First(&product, c.Param("id"))
+
+	if product.ID == 0 {
+		c.JSON(404, gin.H{
+			"message": "Product not found",
+		})
+		return
+	}
+
 	inits.Db.Delete(&models.Product{}, c.Param("id"))
 	c.JSON(200, gin.H{
 		"message": "Product deleted",
@@ -74,6 +91,14 @@ func CreateProduct(c *gin.Context) {
 	var product models.Product
 	c.BindJSON(&product)
 	inits.Db.Create(&product)
+
+	if product.ID == 0 {
+		c.JSON(400, gin.H{
+			"message": "Product already exists",
+		})
+		return
+	}
+
 	c.JSON(200, gin.H{
 		"data": product,
 	})

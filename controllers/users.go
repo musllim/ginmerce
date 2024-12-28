@@ -37,6 +37,12 @@ func CreateUser(c *gin.Context) {
 
 	inits.Db.Create(&user)
 	user.Password = ""
+	if user.ID == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "User already exists",
+		})
+		return
+	}
 
 	c.JSON(200, gin.H{
 		"data": user,
@@ -62,6 +68,14 @@ func Login(c *gin.Context) {
 
 	var users models.User
 	inits.Db.Where("email = ?", user.Email).First(&users)
+
+	if users.ID == 0 {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "Invalid creadentials",
+		})
+		return
+	}
+
 	if err := bcrypt.CompareHashAndPassword([]byte(users.Password), []byte(user.Password)); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"message": "Invalid creadentials",
