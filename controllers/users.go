@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -35,7 +36,8 @@ func CreateUser(c *gin.Context) {
 	hashed, _ := bcrypt.GenerateFromPassword([]byte(user.Password), 8)
 	user.Password = string(hashed)
 
-	inits.Db.Create(&user)
+	vvv := inits.Db.Create(&user)
+	fmt.Println(vvv.Error.Error())
 	user.Password = ""
 	if user.ID == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{
