@@ -16,9 +16,9 @@ import (
 // gin-swagger middleware
 // swagger embed files
 
-// @title           Swagger Example API
+// @title           Ginmerce API swagger doc
 // @version         1.0
-// @description     This is a sample server celler server.
+// @description     This is a sample server go e-commerce REST API.
 // @termsOfService  http://swagger.io/terms/
 
 // @contact.name   API Support

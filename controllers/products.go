@@ -58,6 +58,7 @@ func GetProduct(c *gin.Context) {
 // @Tags products
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param id path string true "Product ID"
 // @Success 200 {string} string	"Product deleted"
 // @Router /products/{id} [delete]
@@ -84,6 +85,7 @@ func DeleteProduct(c *gin.Context) {
 // @Tags products
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
 // @Param product body Product true "Product"
 // @Success 200 {object} Product
 // @Router /products [post]
@@ -91,7 +93,6 @@ func CreateProduct(c *gin.Context) {
 	var product models.Product
 	c.BindJSON(&product)
 	inits.Db.Create(&product)
-
 	if product.ID == 0 {
 		c.JSON(400, gin.H{
 			"message": "Product already exists",
